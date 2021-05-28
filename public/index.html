@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="covid-19 防疫期間，美食商家優惠清單列表">
+    <meta name="author" content="kylinfish">
+    <meta property="og:title" content="COVID19 台灣美食優惠商家">
+    <meta property="og:description" content="covid-19 防疫期間，美食商家優惠清單列表">
+    <meta property="og:url" content="https://covid19-sale.tw">
+    <meta property="og:site_name" content="COVID19 台灣美食優惠商家">
+    <meta property="og:image" content="/img/og_img.jpg">
+    <meta property="article:publisher" content="https://www.facebook.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="COVID19 台灣美食優惠商家">
+    <meta name="twitter:description" content="covid-19 防疫期間，美食商家優惠清單列表">
+    <meta property="twitter:image:src" content="/img/og_img.jpg">
+    <title>COVID19 台灣美食優惠商家</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #EEE;
+        }
+
+        .img-box {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-box>img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HN2M5MW02"></script>
+</head>
+
+<body>
+    <a class="h5 px-1"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSeUwvAlhrrYDblrKaibyby_urF_q6j5PCCMY0RfISSkvsslvA/viewform">👉
+        店家申請表單</a>
+    <a class="h5" href="https://xlashie.com">🐤 微型商家客戶管理</a>
+
+    <div class="container p-2">
+        <div class="p-3 mt-4 mb-4 bg-light rounded-3">
+            <div class="container-fluid">
+                <h1 class="display-5 fw-bold">COVID19 台灣美食優惠商家</h1>
+                <img class="d-none" src="img/og_img.jpg" width="100%">
+                <p class="col-md-8 fs-4">
+                    防疫大家一起來，台灣加油
+                    🍕🍝🥪🌮🌯🥙🧆🍜🥘🥃🥂🍸🍛🍱🍣
+                </p>
+
+                <form>
+                    <!--
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">店家性質</label>
+                        <select class="form-control" id="selectedShopType">
+                            <option selected value="">全部</option>
+                            <option>單店</option>
+                            <option>連鎖店</option>
+                        </select>
+                    </div>
+                    -->
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">區域</label>
+                        <select class="form-control" id="selectedZone">
+                            <option selected value="">全部</option>
+                            <option>台北市</option>
+                            <option>新北市</option>
+                            <option>基隆市</option>
+                            <option>桃園市</option>
+                            <option>新竹縣</option>
+                            <option>新竹市</option>
+                            <option>苗栗縣</option>
+                            <option>台中市</option>
+                            <option>南投縣</option>
+                            <option>彰化縣</option>
+                            <option>雲林縣</option>
+                            <option>嘉義縣</option>
+                            <option>嘉義市</option>
+                            <option>台南市</option>
+                            <option>高雄市</option>
+                            <option>屏東縣</option>
+                            <option>宜蘭縣</option>
+                            <option>花蓮縣</option>
+                            <option>台東縣</option>
+                            <option>澎湖縣</option>
+                            <option>金門縣</option>
+                            <option>連江縣</option>
+                        </select>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">區域</label>
+                        <select class="form-control" id="selectedFoodType">
+                            <option value="" selected>全部</option>
+                            <option value="餐廳">餐廳</option>
+                            <option value="飲料">飲料</option>
+                            <option value="點心">點心</option>
+                            <option value="生鮮">生鮮</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    -->
+                </form>
+            </div>
+        </div>
+        <div class="col mb-2 text-right">總共搜尋到: <b class="text-info" id="numberOfShop"></b> 間資料</div>
+        <div id="shopList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        (function ($) {
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-0HN2M5MW02');
+
+            let items = [];
+            const dataSheetURL =
+                "https://spreadsheets.google.com/feeds/list/1vCs5Duf5COFuTgEQR5M7qAvWGRhEU8KN8l--zaEdd60/1/public/values?alt=json"
+
+            $.get(dataSheetURL, function (data) {
+                let d = data.feed.entry;
+
+                for (let i in d) {
+                    let item = {};
+                    item.name = d[i].gsx$name.$t;
+                    item.zipcode = d[i].gsx$zipcode.$t;
+                    item.address = d[i].gsx$address.$t;
+                    item.phone = d[i].gsx$phone.$t;
+                    item.image_url = d[i].gsx$imageurl.$t;
+                    item.description = d[i].gsx$description.$t;
+                    item.food_type = d[i].gsx$foodtype.$t;
+                    item.ended_at = d[i].gsx$endedat.$t;
+                    items.push(item);
+                }
+
+                items.sort(() => Math.random() - 0.5)
+                updateItems(items);
+            });
+
+            function updateItems(items) {
+                let filterZone = $('#selectedZone').val()
+                //let filterFoodType = $('#selectedFoodType').val()
+                //let filterShopType = $('#selectedShopType').val()
+
+                items = items.filter(item =>
+                    (filterZone == '' || item.address.indexOf(filterZone) !== -1)
+                    // (filterFoodType == '' || item.food_type.indexOf(filterFoodType) !== -1) &&
+                    // (filterShopType == '' || item.shop_type.indexOf(filterShopType) !== -1)
+                )
+
+                $('#numberOfShop').text(items.length)
+                $('#shopList').html('');
+
+                items.forEach(function (item) {
+                    const Card = `
+                        <div class="col">
+                            <div class="card shadow-sm mb-2">
+                                <div class="card-body">
+                                    <badge class="float-right badge badge-info">${item.food_type}</badge>
+                                    <h2>${item.name}</h2>
+
+                                    <pre class="h5 text-danger">${item.description}</pre>
+                                    <p><b>優惠截止日: </b>${item.ended_at}</p>
+                                    <p class="description"><b>地址</b>: ${item.address}</p>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <!--<button type="button" class="btn btn-sm btn-outline-info col-md-5 col-md-offset-1">詳情</button>-->
+                                        <a href="tel:${item.phone}" class="btn btn-sm btn-primary col-md-5">打電話預訂</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $('#shopList').append(Card);
+                })
+            }
+
+            $("select").change(function () {
+                updateItems(items)
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>
